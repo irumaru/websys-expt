@@ -104,7 +104,7 @@ public class Sample {
 	}
 	
 	String code2suit(int code) {
-		String[] name = {"スペード", "ハート", "ダイア", "クローバー"};
+		String[] name = {"スペド", "ハート", "ダイア", "クロバ"};
 		
 		return name[(code - 1) / 13];
 	}
