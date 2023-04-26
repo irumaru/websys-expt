@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+.cards {
+  display: grid; /* グリッドコンテナーにする */
+  grid-template-columns: repeat(13, 1fr); /* 13列のグリッドを作成し、各列の幅を均等にする */
+  grid-auto-rows: minmax(100px, auto); /* 行の高さを100pxから自動的に調整する */
+  gap: 10px; /* 画像間の余白を設定する */
+}
+
+.card {
+  width: 100%; /* 画像をグリッドセルの幅に合わせる */
+  height: auto; /* アスペクト比を保持しながら、画像の高さを自動的に設定する */
+}
