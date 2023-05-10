@@ -1,6 +1,7 @@
 package webexpt_4_after;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PokerModel {
@@ -37,6 +38,7 @@ public class PokerModel {
 		for (int i = 1; i <= 52; i++) {
 			deckcards.add(i);
 		}
+		Collections.shuffle(deckcards);
 		// 山札の先頭から5枚抜いて手札にする
 		handcards.clear();
 		for (int i = 0; i < 5; i++) {
