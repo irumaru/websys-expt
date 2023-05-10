@@ -59,7 +59,8 @@ public class PokerModel {
 	/** indexで指定された位置のカードを、山札から補充したカードを置き換える */
 	public void change(List<String> index) {
 		System.out.println("index=" + index);
-		for (int i = 0; i < 5; i++) {
+		for (String is: index) {
+			int i = Integer.parseInt(is);
 			int c = deckcards.remove(0); // 山札の先頭を取り除き、
 			handcards.set(i, c); // 手札の指定場所に入れる
 		}
