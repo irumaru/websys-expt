@@ -1,4 +1,4 @@
-package webexpt_4_after;
+package poker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -89,25 +89,20 @@ public class PokerModel {
 			}
 		}
 
-		String pairMessage = "なし";
-		if (Arrays.equals(pair, new int[] { 1, 0, 0 })) {
-			pairMessage = "ワンペア";
-		} else if (Arrays.equals(pair, new int[] { 2, 0, 0 })) {
-			pairMessage = "ツーペア";
-		} else if (Arrays.equals(pair, new int[] { 0, 1, 0 })) {
-			pairMessage = "スリーカード";
-		} else if (Arrays.equals(pair, new int[] { 1, 1, 0 })) {
-			pairMessage = "フルハウス";
-		} else if (Arrays.equals(pair, new int[] { 0, 0, 1 })) {
-			pairMessage = "フォーカード";
-		}
-		
-		message += pairMessage;
-		
 		int red = countRed();
 		int seven = countSeven();
 		int point = 0;
-		if (red == 5) {
+		if (Arrays.equals(pair, new int[] { 0, 0, 1 })) {
+			message = "フォーカード";
+		} else if (Arrays.equals(pair, new int[] { 1, 1, 0 })) {
+			message = "フルハウス";
+		} else if (Arrays.equals(pair, new int[] { 0, 1, 0 })) {
+			message = "スリーカード";
+		} else if (Arrays.equals(pair, new int[] { 2, 0, 0 })) {
+			message = "ツーペア";
+		} else if (Arrays.equals(pair, new int[] { 1, 0, 0 })) {
+			message = "ワンペア";
+		} else if (red == 5) {
 			message = "レッド";
 			point = 50;
 		} else if (seven > 0) {
@@ -117,8 +112,9 @@ public class PokerModel {
 			message = "ハイカード";
 			point = -100;
 		}
+		
 		chips += point;
-		message += ": " + pairMessage + ": " + chips;
+		message += ": " + chips;
 	}
 	
 	void countNumber(){
