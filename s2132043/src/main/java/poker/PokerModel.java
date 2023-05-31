@@ -6,6 +6,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class PokerModel {
+	/** ゲームモード **/
+	int mode;
+	
 	/** ゲーム回数 */
 	int games;
 
@@ -33,6 +36,7 @@ public class PokerModel {
 	public void reset() {
 		games = 0;
 		chips = 500;
+		mode = 0;
 	}
 
 	/** 次のゲームのためにカードを配りなおす */
@@ -58,6 +62,7 @@ public class PokerModel {
 		message = "交換するカードをチェックしてください";
 		buttonLabel = "交換";
 		games++;
+		mode = 1;
 	}
 
 	/** indexで指定された位置のカードを、山札から補充したカードを置き換える */
@@ -70,6 +75,7 @@ public class PokerModel {
 		}
 		evaluate();
 		buttonLabel = "次のゲーム";
+		mode = 0;
 	}
 
 	/** 役の判別を行い、チップを増減させる */
@@ -110,11 +116,16 @@ public class PokerModel {
 			point = seven * 10;
 		} else {
 			message = "ハイカード";
-			point = -100;
+			point -= 100;
 		}
 		
 		chips += point;
-		message += ": " + chips;
+		
+		if(chips <= 0) {
+			message = "ゲームオーバー";
+		}else {
+			message += ": " + chips;
+		}
 	}
 	
 	void countNumber(){
@@ -197,5 +208,9 @@ public class PokerModel {
 	/** プレイヤーへのメッセージを返す */
 	public String getMessage() {
 		return message;
+	}
+	
+	public Integer getMode() {
+		return mode;
 	}
 }

@@ -28,6 +28,7 @@ String label = model.getButtonLabel();
 <td><img src="cards/<%= model.getHandcardAt(3) %>.png" width="100" height="150"></td>
 <td><img src="cards/<%= model.getHandcardAt(4) %>.png" width="100" height="150"></td>
 </tr>
+<% if(model.getMode() == 1) { %>
 <tr align="center">
 <td><input type="checkbox" name="change" value="0"></td>
 <td><input type="checkbox" name="change" value="1"></td>
@@ -35,10 +36,11 @@ String label = model.getButtonLabel();
 <td><input type="checkbox" name="change" value="3"></td>
 <td><input type="checkbox" name="change" value="4"></td>
 </tr>
+<% } %>
 </table>
 <input type="submit" value="<%= label %>">
 </form>
 <hr>
-<a href="/poker/PokerServlet">リセット</a>
+<a href="/s2132043/PokerServlet">リセット</a>
 </body>
 </html>
