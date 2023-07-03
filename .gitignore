@@ -1,4 +1,5 @@
 .metadata
+Servers
 bin/
 tmp/
 *.tmp
@@ -6,6 +7,7 @@ tmp/
 *.swp
 *~.nib
 local.properties
+h2/
 .settings/
 .loadpath
 .recommenders
