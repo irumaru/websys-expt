@@ -2,12 +2,12 @@
 Servers
 bin/
 tmp/
+h2/
 *.tmp
 *.bak
 *.swp
 *~.nib
 local.properties
-h2/
 .settings/
 .loadpath
 .recommenders
