@@ -1,8 +1,6 @@
 .metadata
-Servers
 bin/
 tmp/
-h2/
 *.tmp
 *.bak
 *.swp
