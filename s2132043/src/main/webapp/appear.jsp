@@ -16,26 +16,30 @@ List<Appear> appearList = (List<Appear>) request.getAttribute("list");
 	</h1>
 	<hr>
 	<form action="AppearServlet" method="POST">
-			<input type="radio" name="item" value="ID" checked="checked">ID
-			<input type="radio" name="item" value="番号">番号
-			<input type="radio" name="item" value="名前">名前
-			<br>
-			<input type="radio" name="order" value="asc" checked="checked">昇順
-			<input type="radio" name="order" value="desc">降順
-			<br>
-			<input type="submit" name="submit" value="並び替え">
+		番号<input type="text" name="newnumber">
+		市コード<input type="text" name="newshicode">
+		<input type="submit" name="submit" value="登録">
 		<hr>
-		番号<input type="text" name="newnumber"> 市コード<input type="text"
-			name="newshicode"> <input type="submit" name="submit"
-			value="登録">
+		<input type="radio" name="item" value="ID" checked="checked">ID
+		<input type="radio" name="item" value="番号">番号
+		<input type="radio" name="item" value="名前">名前
+		<br>
+		<input type="radio" name="order" value="asc" checked="checked">昇順
+		<input type="radio" name="order" value="desc">降順
+		<br>
+		<input type="submit" name="submit" value="並び替え">
 		<hr>
-		ID<input type="text" name="deleteid"> <input type="submit"
-			name="submit" value="削除">
+		<!--
+		ID<input type="text" name="deleteid">
+		<input type="submit" name="submit" value="削除">
+		-->
 	</form>
+	<!--
 	<hr>
 	<a href="AppearServlet?shimei=習志野市">習志野市</a>
 	<a href="AppearServlet?shimei=船橋市">船橋市</a>
 	<hr>
+	-->
 	<%
 	if (appearList != null) {
 	%>
@@ -49,6 +53,7 @@ List<Appear> appearList = (List<Appear>) request.getAttribute("list");
 			<th>市名</th>
 			<th>日付</th>
 			<th>時刻</th>
+			<th>処理</th>
 		</tr>
 		<%
 		for (Appear appear : appearList) {
@@ -61,6 +66,12 @@ List<Appear> appearList = (List<Appear>) request.getAttribute("list");
 			<td><%=appear.getShi()%></td>
 			<td><%=appear.getDate()%></td>
 			<td><%=appear.getTime() %></td>
+			<td>
+				<form action="AppearServlet" method="POST">
+					<input type="hidden" name="deleteid" value="<%=appear.getId()%>">
+					<input type="submit" name="submit" value="削除">
+				</form>
+			</td>
 		</tr>
 		<% } %>
 	</table>
