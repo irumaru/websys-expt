@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="db.Appear, java.util.List"%>
+<%@ page import="db.Appear, db.Pokemon, db.Region, java.util.List"%>
 <%
-List<Appear> appearList = (List<Appear>) request.getAttribute("list");
+List<Appear> appearList = (List<Appear>) request.getAttribute("appearList");
+List<Pokemon> pokemonList = (List<Pokemon>) request.getAttribute("pokemonList");
+List<Region> regionList = (List<Region>) request.getAttribute("regionList");
 %>
 
 <!doctype html>
@@ -23,16 +25,41 @@ List<Appear> appearList = (List<Appear>) request.getAttribute("list");
 		<a href="AppearServlet">ポケモン出現DB</a>
 	</h1>
 	<hr>
-	<form action="AppearServlet" method="POST">
+	<form action="AppearServlet" method="POST" id="pokemon-add-form">
 		<!--
 		番号<input type="text" name="newnumber">
 		市コード<input type="text" name="newshicode">
 		-->
-		名前を入力<input type="text" name="newname">
-		県を入力<input type="text" name="newken">
-		市を入力<input type="text" name="newshi">
+		<!-- ポケモン名を入力 -->
+		名前を入力
+		<input type="text" name="newname" list="polemonList" class="form-control datalist-validate" placeholder="キーワードを入力して選択" autocomplete="off" id="newname">
+		<%
+		if (pokemonList != null) {
+		%>
+		<datalist id="polemonList">
+		   	<%
+			for (Pokemon pokemon : pokemonList) {
+			%>
+				<option value="<%= pokemon.getName() %>" class="newname-suggest">
+			<% } %>
+		</datalist>
+		<% } %>
 		
-		<input type="submit" name="submit" value="登録">
+		県と市を入力
+		<input type="text" name="newregion" list="regionList" class="form-control datalist-validate" placeholder="キーワードを入力して選択" autocomplete="off" id="newregion">
+		<%
+		if (regionList != null) {
+		%>
+		<datalist id="regionList">
+		   	<%
+			for (Region region : regionList) {
+			%>
+				<option value="<%= region.getKenName() + " " + region.getShiName() %>" class="newregion-suggest">
+			<% } %>
+		</datalist>
+		<% } %>
+		
+		<input type="button" onclick="addPokemon()" value="登録">
 		<hr>
 		<input type="radio" name="item" value="ID" checked="checked">ID
 		<input type="radio" name="item" value="番号">番号
@@ -40,8 +67,8 @@ List<Appear> appearList = (List<Appear>) request.getAttribute("list");
 		<br>
 		<input type="radio" name="order" value="asc" checked="checked">昇順
 		<input type="radio" name="order" value="desc">降順
-		<br>
-		<input type="submit" name="submit" value="並び替え">
+		<br>	
+		<input type="button" onclick="search()" value="並び替え">
 		<hr>
 		<!--
 		ID<input type="text" name="deleteid">
@@ -83,7 +110,7 @@ List<Appear> appearList = (List<Appear>) request.getAttribute("list");
 			<td>
 				<form action="AppearServlet" method="POST">
 					<input type="hidden" name="deleteid" value="<%=appear.getId()%>">
-					<input type="submit" name="submit" value="削除">
+					<input type="submit" name="mode" value="削除">
 				</form>
 			</td>
 		</tr>
@@ -104,4 +131,5 @@ List<Appear> appearList = (List<Appear>) request.getAttribute("list");
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     -->
   </body>
+  <script type="text/javascript" src="form.js"></script>
 </html>
