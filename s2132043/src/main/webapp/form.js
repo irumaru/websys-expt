@@ -54,7 +54,7 @@ inputValidate = (idname) => {
 	
 	if(!flag){
 		console.log(idname + "が原因です。");
-		alert("一致するポケモンがいません。リストから選択してください。");
+		alert("リストに存在する項目から選択してください。");
 	}
 	
 	return flag;
