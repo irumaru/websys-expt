@@ -69,6 +69,10 @@ public class AppearServlet extends HttpServlet {
 		selectAllPokemon(request, response);
 		selectAllRegion(request, response);
 		
+		//表示用
+		request.setAttribute("item", item == null ? "ID" : item);
+		request.setAttribute("order", order == null ? "asc" :  order);
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/appear.jsp");
 		dispatcher.forward(request, response);
 	}

@@ -5,6 +5,8 @@
 List<Appear> appearList = (List<Appear>) request.getAttribute("appearList");
 List<Pokemon> pokemonList = (List<Pokemon>) request.getAttribute("pokemonList");
 List<Region> regionList = (List<Region>) request.getAttribute("regionList");
+String item = (String)request.getAttribute("item");
+String order = (String)request.getAttribute("order");
 
 LocalDateTime nowDate = LocalDateTime.now();
 DateTimeFormatter dateFmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -74,20 +76,39 @@ String formatNowTime = timeFmt.format(nowDate);
 		<br>
 		<input type="button" onclick="addPokemon()" value="登録" class="btn btn-primary">
 		<hr>
+	</form>
+	<form action="AppearServlet" method="GET">
+		<!--
 		<input type="radio" name="item" value="ID" checked="checked">ID
 		<input type="radio" name="item" value="番号">番号
 		<input type="radio" name="item" value="名前">名前
+		-->
+		表示順の項目
+		<select name="item" class="form-select">
+			<option value="ID" <%= item.equals("ID") ? "selected" : "" %>>ID</option>
+			<option value="番号" <%= item.equals("番号") ? "selected" : "" %>>番号</option>
+			<option value="名前" <%= item.equals("名前") ? "selected" : "" %>>名前</option>
+		</select>
 		<br>
+		<!--
 		<input type="radio" name="order" value="asc" checked="checked">昇順
 		<input type="radio" name="order" value="desc">降順
+		-->
+		表示順
+		<select name="order" class="form-select">
+			<option value="asc" <%= order.equals("asc") ? "selected" : "" %>>昇順</option><%= order %>
+			<option value="desc" <%= order.equals("desc") ? "selected" : "" %>>降順</option>
+		</select>
 		<br>	
-		<input type="button" onclick="search()" value="並び替え" class="btn btn-primary">
+		<!--<input type="button" onclick="search()" value="並び替え" class="btn btn-primary">-->
+		<input type="submit" value="並び替え" class="btn btn-primary">
 		<hr>
+	</form>
 		<!--
 		ID<input type="text" name="deleteid">
 		<input type="submit" name="submit" value="削除">
 		-->
-	</form>
+	
 	<!--
 	<hr>
 	<a href="AppearServlet?shimei=習志野市">習志野市</a>
