@@ -1,6 +1,8 @@
 package db;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -28,6 +30,8 @@ public class AppearServlet extends HttpServlet {
 		String newshicode = request.getParameter("newshicode"); // 登録する市コード
 		String newname = request.getParameter("newname");
 		String newregion = request.getParameter("newregion");// 県と市を入力
+		String arrivalDate = request.getParameter("arrivalDate"); //日を入力
+		String arrivalTime = request.getParameter("arrivalTime"); //時間を入力
 		String deleteid = request.getParameter("deleteid"); // 削除するID
 		String shimei = request.getParameter("shimei"); // 市名をクリックした場合
 		
@@ -35,6 +39,7 @@ public class AppearServlet extends HttpServlet {
 		System.out.printf("%s:%s:\n", newnumber, newshicode);
 		System.out.printf("Name: %s, Region: %s\n", newname, newregion);
 		System.out.printf("%s:%s:\n", deleteid, shimei);
+		System.out.printf("ArrivalDate: %s, ArrivalTime: %s\n", arrivalDate, arrivalTime);
 		
 		if (mode != null) {
 			if (mode.equals("並び替え")) { // この場合は特に何もしない
@@ -54,7 +59,7 @@ public class AppearServlet extends HttpServlet {
 				
 				System.out.printf("SHI: %s, NAME: %s\n", shicode, pokemoncode);
 				
-				insert(pokemoncode, shicode);
+				insert(pokemoncode, shicode, arrivalDate, arrivalTime + ":00");
 			} else if (mode.equals("削除")) {
 				delete(deleteid);
 			}
@@ -108,17 +113,23 @@ public class AppearServlet extends HttpServlet {
 	}
 
 	/** DAOを呼び出す */
-	void insert(String newnumber, String newshicode) {
+	void insert(String newnumber, String newshicode, String arrivalDate, String arrivalTime) {
 		try {
 			int num = Integer.parseInt(newnumber);
 			int code = Integer.parseInt(newshicode);
+			// Date format %4d-%02d-%02d
+			Date date = Date.valueOf(arrivalDate);
+			// Time format %02d:%02d:%02d
+			Time time = Time.valueOf(arrivalTime);
 			
 			AppearDAO appear = new AppearDAO();
-			boolean status = appear.insert(num, code);
+			boolean status = appear.insert(num, code, date, time);
 			
 			System.out.println("AppearDAOは" + status + "で終了しました。");
 		} catch (NumberFormatException e) {
 			System.out.println("不正な番号または市コードが入力されました" + e.getMessage());
+		} catch (IllegalArgumentException e) {
+			System.out.println("不正な日付が入力されました" + e.getMessage());
 		}
 	}
 

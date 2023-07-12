@@ -48,6 +48,36 @@ public class AppearDAO {
 		}
 		return false;
 	}
+	
+	/** 1件のデータを追加する．成功ならtrueを返す． */
+	public boolean insert(int number, int shicode, Date date, Time time) {
+		String url = "jdbc:h2:tcp://localhost/./s2132043";
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(url, "user", "pass");
+			String sql = "INSERT INTO appear(番号,市コード,日付,時刻) VALUES(?,?,?,?)";
+			PreparedStatement pre = conn.prepareStatement(sql);
+			pre.setInt(1, number);
+			pre.setInt(2, shicode);
+			pre.setDate(3, date);
+			pre.setTime(4, time);
+			;
+			int result = pre.executeUpdate();
+			if (result == 1)
+				return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return false;
+	}
 
 	/** 1件のデータを追加する．成功ならtrueを返す． */
 	public boolean insert(int number, int shicode,

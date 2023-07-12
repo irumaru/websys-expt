@@ -3,7 +3,6 @@
  */
 
 let form = document.querySelector("#pokemon-add-form");
-
 let datalistValidate = document.querySelectorAll(".datalist-validate");
 
 addPokemon = () => {

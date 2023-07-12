@@ -1,10 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="db.Appear, db.Pokemon, db.Region, java.util.List"%>
+<%@ page import="db.Appear, db.Pokemon, db.Region, java.util.List, java.time.LocalDateTime, java.time.format.DateTimeFormatter"%>
 <%
 List<Appear> appearList = (List<Appear>) request.getAttribute("appearList");
 List<Pokemon> pokemonList = (List<Pokemon>) request.getAttribute("pokemonList");
 List<Region> regionList = (List<Region>) request.getAttribute("regionList");
+
+LocalDateTime nowDate = LocalDateTime.now();
+DateTimeFormatter dateFmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+DateTimeFormatter timeFmt = DateTimeFormatter.ofPattern("HH:mm");
+String formatNowDate = dateFmt.format(nowDate);
+String formatNowTime = timeFmt.format(nowDate);
 %>
 
 <!doctype html>
@@ -16,7 +22,7 @@ List<Region> regionList = (List<Region>) request.getAttribute("regionList");
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+		
     <title>Hello, world!</title>
   </head>
   <body>
@@ -59,7 +65,14 @@ List<Region> regionList = (List<Region>) request.getAttribute("regionList");
 		</datalist>
 		<% } %>
 		
-		<input type="button" onclick="addPokemon()" value="登録">
+		出現日
+		<br>
+		<input type="date" name="arrivalDate" require value="<%= formatNowDate %>" class="form-control">
+		出現時間
+		<br>
+		<input type="time" name="arrivalTime" require value="<%= formatNowTime %>" class="form-control">
+		<br>
+		<input type="button" onclick="addPokemon()" value="登録" class="btn btn-primary">
 		<hr>
 		<input type="radio" name="item" value="ID" checked="checked">ID
 		<input type="radio" name="item" value="番号">番号
@@ -68,7 +81,7 @@ List<Region> regionList = (List<Region>) request.getAttribute("regionList");
 		<input type="radio" name="order" value="asc" checked="checked">昇順
 		<input type="radio" name="order" value="desc">降順
 		<br>	
-		<input type="button" onclick="search()" value="並び替え">
+		<input type="button" onclick="search()" value="並び替え" class="btn btn-primary">
 		<hr>
 		<!--
 		ID<input type="text" name="deleteid">
@@ -85,7 +98,7 @@ List<Region> regionList = (List<Region>) request.getAttribute("regionList");
 	if (appearList != null) {
 	%>
 	出現情報
-	<table border="1">
+	<table class="table">
 		<tr>
 			<th>ID</th>
 			<th>番号</th>
@@ -102,7 +115,11 @@ List<Region> regionList = (List<Region>) request.getAttribute("regionList");
 		<tr>
 			<td><%=appear.getId()%></td>
 			<td><%=appear.getNumber()%></td>
-			<td><%=appear.getName()%></td>
+			<td>
+				<button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#test-modal-<%=appear.getId()%>" style="padding: 0;">
+		            <%=appear.getName()%>
+		        </button>
+			</td>
 			<td><%=appear.getKen()%></td>
 			<td><%=appear.getShi()%></td>
 			<td><%=appear.getDate()%></td>
@@ -110,11 +127,32 @@ List<Region> regionList = (List<Region>) request.getAttribute("regionList");
 			<td>
 				<form action="AppearServlet" method="POST">
 					<input type="hidden" name="deleteid" value="<%=appear.getId()%>">
-					<input type="submit" name="mode" value="削除">
+					<input type="submit" name="mode" value="削除" class="btn btn-sm btn-primary">
 				</form>
 			</td>
 		</tr>
-		<% } %>
+		
+		<div id="test-modal-<%=appear.getId()%>" class="modal fade" tabindex="-1" aria-hidden="true">
+	        <div class="modal-dialog">
+	            <div class="modal-content">
+	                <div class="modal-header">
+	                    <h5 class="modal-title"><%=appear.getName()%></h5>
+	                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	                </div>
+	                <div class="modal-body">
+	                    <img src="pokemonImages/<%=appear.getNumber()%>.png" style="width: 100%;">
+	                </div>
+	                <!--
+	                <div class="modal-footer">
+	                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+	                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+	                </div>
+	                -->
+	            </div>
+	        </div>
+	    </div>
+	    
+	    <% } %>
 	</table>
 	<% } %>
 	
@@ -131,5 +169,6 @@ List<Region> regionList = (List<Region>) request.getAttribute("regionList");
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     -->
   </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.js"></script>
   <script type="text/javascript" src="form.js"></script>
 </html>
