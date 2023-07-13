@@ -161,7 +161,7 @@ String formatNowTime = timeFmt.format(nowDate);
 	                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	                </div>
 	                <div class="modal-body">
-	                    <img src="pokemonImages/<%=appear.getNumber()%>.png" style="width: 100%;">
+	                    <img src="pokemonImages/<%=appear.getNumber()%>.gif" style="width: 100%;">
 	                </div>
 	                <!--
 	                <div class="modal-footer">
