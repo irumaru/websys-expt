@@ -33,7 +33,7 @@ String formatNowTime = timeFmt.format(nowDate);
 		<a href="AppearServlet">ポケモン出現DB</a>
 	</h1>
 	<hr>
-	<form action="AppearServlet" method="POST" id="pokemon-add-form">
+	<form action="AppearServlet?item=<%= item %>&order=<%= order %>" method="POST" id="pokemon-add-form">
 		<!--
 		番号<input type="text" name="newnumber">
 		市コード<input type="text" name="newshicode">
